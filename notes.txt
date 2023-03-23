@@ -1,0 +1,53 @@
+1. fileServer := http.FileServer(http.Dir("./static")):
+the given line of code creates a file server handler that will serve static files from 
+the "static" directory when a user requests them through their web browser.
+We need to specify the folder name in the http.FileServer() arguments to tell the file server handler where to look for the files. The http.Dir("./static") 
+part of the code specifies the name of the directory on the server where the files are located.
+
+2. why we use word "http":
+In Go language, the standard library includes an http package that provides a set of functions and types for working with the HTTP protocol. 
+The http package contains functions for creating HTTP servers, handling HTTP requests, and sending HTTP responses.
+
+3. http.Handle("/", fileServer):
+we are telling the Go HTTP server to associate that handler with a specific URL path pattern. 
+This means that when an HTTP request is received by the server that matches the registered URL pattern, the server will call the registered handler to handle that request.
+the URL pattern that we are matching is the root URL pattern, represented by the forward slash /.
+The root URL pattern / is the most basic URL pattern and matches the root of a website or web application. In other words, it matches the main page of the website.
+
+
+4. "w" is declared with type http.ResponseWriter, which is a built-in interface in Go's net/http package. This type represents the HTTP response that the server sends back to the client.
+"r" is declared with type *http.Request, which is also a built-in type in net/http package. This type represents the HTTP request that the client sends to the server.
+
+5. Parsing:
+It refers to the process of analyzing the contents of the HTTP request that the client has sent to the server, and extracting any relevant data from it.
+When a client sends a request to the server, the request includes various types of information, such as headers, cookies, and body data.
+To extract this data from the request, we use the r.ParseForm() method, which reads the request's form data and stores it in a data structure that we can access in our code.
+
+6. Request:
+A request is a message sent by a client (e.g., a web browser) to a server, asking it to perform some action or provide some information.
+When the server receives a request, it processes it by interpreting the request message, performing the requested action (e.g., returning a web page or storing data), and sending a response message back to the client.
+The response typically includes a status code (such as 200 OK or 404 Not Found) that indicates whether the request was successful or not, along with any requested data or other information.
+a request typically consists of an HTTP request message sent by the client to the server over the internet. 
+This message includes a request method (such as GET, POST, PUT, DELETE, etc.) that specifies the type of action to be performed
+
+7. if err := r.ParseForm(); err != nil:
+ParseForm() is a method that's provided by the http.Request type, which is the type of the r parameter in the formHandler function. It's a built-in method that's part of the standard library's net/http package, and it's used to parse the request body as form data.
+When you call r.ParseForm() in your code, you're invoking this method on the http.Request instance that was passed to the formHandler function. 
+This method is responsible for parsing the form data from the request body.
+
+This line uses a Go "short variable declaration" syntax to assign the result of the r.ParseForm() method to the err variable.
+
+8. err := http.ListenAndServe(":8080", nil)
+This line starts a web server on port 8080 and listens for incoming HTTP requests. 
+In the context of the http.ListenAndServe() function call, the second argument is a Handler interface that specifies how the server should handle incoming HTTP requests.
+The nil value in this case means that we are not providing a custom handler, so the server should use the default handler provided by the http package.
+
+9. :8080
+It specifies that the server should listen for incoming HTTP requests on port 8080 of the local network interface, without specifying a specific IP address.
+The network address 127.0.0.1:8080 specifies that the server should listen for incoming network traffic on the loopback network interface (127.0.0.1) and the port number 8080.
+
+10. log.fatal(err)
+The log.Fatal() function call is typically used to log a fatal error and immediately terminate the program because the error is severe enough that the program cannot continue running. 
+This is useful in cases where the error is unrecoverable and continuing to run the program would cause further problems.
+For example, in the context of an HTTP server, if the server fails to start due to an error such as a port conflict, the log.Fatal() function call 
+can be used to log the error message and then terminate the program so that the problem can be addressed before attempting to run the program again.
